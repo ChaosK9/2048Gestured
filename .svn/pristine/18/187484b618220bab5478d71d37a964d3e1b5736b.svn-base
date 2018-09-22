@@ -1,0 +1,138 @@
+package ca.uwaterloo.ece155_nlab2;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.util.Log;
+import android.widget.TextView;
+
+import java.util.LinkedList;
+
+import ca.uwaterloo.sensortoy.LineGraphView;
+import ca.uwaterloo.ece155_nlab2.finiteStateMachine;
+
+//Creating Accelermeter Sensor Listener
+
+public class AccelerometerSensorEventListener implements SensorEventListener {
+    TextView output;
+    TextView gestureTV;
+    float[] filterValue = {0,0,0};
+    float[] maxValue = {(float)0.0, (float)0.0, (float)0.0};
+    static float[][] savedValues = new float[100][3];
+    static int writeIndex = 0;
+    final int c = 10;
+
+    LineGraphView outputGraph;
+    finiteStateMachine fsmX;
+    finiteStateMachine fsmY;
+    public AccelerometerSensorEventListener(TextView outputView, LineGraphView graphView, finiteStateMachine stateMachineX, finiteStateMachine stateMachineY, TextView fsmResultTV){
+        output = outputView;
+        outputGraph = graphView;
+        fsmX = stateMachineX;
+        fsmY = stateMachineY;
+        gestureTV = fsmResultTV;
+    }
+
+    public void onAccuracyChanged(Sensor s, int i){}
+
+    public void onSensorChanged(SensorEvent se){
+
+
+        if(se.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+            // Calculate filtered value using new readings
+           for(int i =0;i<3; i++) {
+               filterValue[i] += (se.values[i] - filterValue[i]) / c;
+           }
+
+            // Update FSMs and check if they've determined an input gesture
+            fsmX.update(filterValue[0]);
+            fsmY.update(filterValue[1]);
+            if (fsmX.isDetermined() || fsmY.isDetermined()) {
+                determineGesture(fsmX.getType(), fsmY.getType());
+            }
+
+
+            //Check if Max Value must be updated
+            if (vectorMagnitude(filterValue) > vectorMagnitude(maxValue)) {
+                maxValue[0] = filterValue[0];
+                maxValue[1] = filterValue[1];
+                maxValue[2] = filterValue[2];
+            }
+
+            // Update text view
+            String outputString = String.format("Accelerometer Sensor reading: (%f, %f, %f) \n Max reading: (%f, %f, %f) \n", filterValue[0], filterValue[1], filterValue[2], maxValue[0], maxValue[1], maxValue[2]);
+            output.setText(outputString);
+
+            // Update graph
+            outputGraph.addPoint(filterValue);
+
+            // Save filtered reading to data array
+            saveValue(filterValue);
+        }
+
+    }
+
+    private double vectorMagnitude (float[] vector1) {
+        return Math.sqrt(Math.pow(vector1[0], 2) + Math.pow(vector1[1], 2) + Math.pow(vector1[2], 2));
+    }
+
+    void saveValue(float[] value) {
+        for (int i=0; i<3; i++) {
+            savedValues[writeIndex][i] = value[i];
+        }
+        writeIndex = ++writeIndex % 100;
+    }
+
+    public static int getWriteIndex() {
+        return writeIndex;
+    }
+
+    public static float[][] getSavedValues() {
+        return savedValues;
+    }
+
+    void determineGesture(finiteStateMachine.InputType X_TYPE, finiteStateMachine.InputType Y_TYPE) {
+        switch (X_TYPE) {
+            case TYPE_A:
+                // Possible input to the right
+                Log.d("log", "FSMX type A");
+                switch (Y_TYPE) {
+                    case TYPE_X:
+                        gestureTV.setText("RIGHT");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case TYPE_B:
+                // Possible input to the left
+                Log.d("log", "FSMX type B");
+
+                switch (Y_TYPE) {
+                    case TYPE_X:
+                        gestureTV.setText("LEFT");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case TYPE_X:
+                // Possible vertical input
+                Log.d("log", "FSMX type X");
+                switch (Y_TYPE) {
+                    case TYPE_A:
+                        gestureTV.setText("UP");
+                        break;
+                    case TYPE_B:
+                        gestureTV.setText("DOWN");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+}

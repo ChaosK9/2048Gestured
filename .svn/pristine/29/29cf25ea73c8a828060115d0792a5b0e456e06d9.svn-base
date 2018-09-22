@@ -1,0 +1,149 @@
+package ca.uwaterloo.ece155_nlab2;
+
+import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+
+import ca.uwaterloo.sensortoy.LineGraphView;
+import lab2_204_01.uwaterloo.ca.lab2_204_01.R;
+
+public class Lab2_204_01 extends AppCompatActivity {
+    // THRESHOLD Constants stored in arrays
+    //Index[0]=THRES_A1
+    //Index[1]=THRES_A2
+    //Index[2]=THRES_A3
+    //Index[3]=THRES_B1
+    //Index[4]=THRES_B2
+    //Index[5]=THRES_B3
+
+    final float[] X_THRES = {(float)0.7,(float)3,(float)-0.3,(float)-0.7,(float)-3,(float)0.3};
+    final float[] Y_THRES = {(float)1,(float)2,(float)-0.2,(float)-1,(float)-2,(float)0.2};
+
+    LineGraphView graph;
+    finiteStateMachine fsmX;
+    finiteStateMachine fsmY;
+
+    File file = null;
+    PrintWriter prt = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_lab2_204_01);
+
+        //Creating Light sensor reading display object
+        TextView lightSensorTV = (TextView) findViewById(R.id.label1);
+        lightSensorTV.setText("Light Sensor Reading:");
+        lightSensorTV.setTextColor(Color.CYAN);
+
+        //Get the layout object
+        LinearLayout r1 = (LinearLayout) findViewById(R.id.label2);
+        r1.setOrientation(LinearLayout.VERTICAL);
+
+        TextView gestureTVX = new TextView(getApplicationContext());
+        gestureTVX.setText("WAIT");
+        r1.addView(gestureTVX);
+        gestureTVX.setTextColor(Color.CYAN);
+
+        TextView gestureTVY = new TextView(getApplicationContext());
+        gestureTVY.setText("WAIT");
+        r1.addView(gestureTVY);
+        gestureTVY.setTextColor(Color.CYAN);
+
+        TextView latestGestureTV = new TextView(getApplicationContext());
+        latestGestureTV.setText("LATEST GESTURE");
+        latestGestureTV.setTextSize(50);
+        r1.addView(latestGestureTV);
+        latestGestureTV.setTextColor(Color.CYAN);
+
+
+        //Creating Accelerometer display object
+        TextView accelerometerSensorTV = new TextView(getApplicationContext());
+        accelerometerSensorTV.setText("Accelerometer Reading:");
+        r1.addView(accelerometerSensorTV);
+        accelerometerSensorTV.setTextColor(Color.CYAN);
+
+        //Creating Mgnetic Filed Reading display object
+        TextView magneticFieldTV = new TextView(getApplicationContext());
+        magneticFieldTV.setText("Magnetic Field Reading:");
+       // r1.addView(magneticFieldTV);
+        magneticFieldTV.setTextColor(Color.CYAN);
+
+        //Creating Rotationla Readimng display object
+        TextView rotationalVectorTV = new TextView(getApplicationContext());
+        rotationalVectorTV.setText("Rotational Reading:");
+        //r1.addView(rotationalVectorTV);
+        rotationalVectorTV.setTextColor(Color.CYAN);
+
+        //Creating graph
+        graph = new LineGraphView(getApplicationContext(), 100, Arrays.asList("x", "y", "z"));
+        r1.addView(graph);
+        graph.setVisibility(View.VISIBLE);
+
+        //Create instance of the Finite State Machine
+        fsmX = new finiteStateMachine(gestureTVX, X_THRES);
+        fsmY = new finiteStateMachine(gestureTVY, Y_THRES);
+
+
+        //Initializing Sensors and registering them as listeners
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        SensorEventListener sel_light = new LightSensorEventListener(lightSensorTV);
+        sensorManager.registerListener(sel_light,lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        SensorEventListener sel_accelerometer = new AccelerometerSensorEventListener(accelerometerSensorTV, graph, fsmX, fsmY, latestGestureTV);
+        sensorManager.registerListener(sel_accelerometer,accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+
+        Sensor magneticFieldSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        SensorEventListener sel_magneticField = new MagneticFieldSensorEventListener(magneticFieldTV);
+        sensorManager.registerListener(sel_magneticField,magneticFieldSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        Sensor rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        SensorEventListener sel_rotationVector = new RotationalVectorSensorEventListener(rotationalVectorTV);
+        sensorManager.registerListener(sel_rotationVector,rotationVectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
+
+        final Button saveAccelerometerValuesButton = new Button(getApplicationContext());
+        saveAccelerometerValuesButton.setText("Save Accelerometer Values");
+        saveAccelerometerValuesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                writeToFile(AccelerometerSensorEventListener.getSavedValues(), AccelerometerSensorEventListener.getWriteIndex());
+            }
+        });
+        r1.addView(saveAccelerometerValuesButton);
+
+    }
+    //Write the past 100 accelerometer readigs to  Output.txt once button is pressed
+    private void writeToFile(float[][] savedValues, int startIndex){
+
+        try{
+            file = new File(getExternalFilesDir("AccelerometerReadings"), "Output.csv");
+            prt = new PrintWriter(file);
+
+            for (int i=0; i<100; i++) {
+                prt.println(String.format("%f,%f,%f", savedValues[(startIndex + i) % 100][0], savedValues[(startIndex + i) % 100][1], savedValues[(startIndex + i) % 100][2]));
+            }
+        }catch(IOException e){
+            //Log.e("Failed");
+        }finally{
+            if(prt != null){
+                prt.close();
+            }
+            //Log.d("Ended");
+
+        }
+    }
+}

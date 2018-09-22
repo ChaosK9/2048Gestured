@@ -1,0 +1,40 @@
+package ca.uwaterloo.ece155_nlab2;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.widget.TextView;
+
+//Creating Rotational Vector Sensor Listener
+
+public class RotationalVectorSensorEventListener implements SensorEventListener {
+    TextView output;
+    float[] currentValue;
+    float[] maxValue = {(float)0.0, (float)0.0, (float)0.0};
+
+    public RotationalVectorSensorEventListener(TextView outputView){
+        output = outputView;
+    }
+
+    public void onAccuracyChanged(Sensor s, int i){}
+
+    public void onSensorChanged(SensorEvent se){
+        if(se.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR){
+            currentValue = se.values;
+
+            //Check if Max Value must be updated
+            if (vectorMagnitude(currentValue) > vectorMagnitude(maxValue)) {
+                maxValue[0] = currentValue[0];
+                maxValue[1] = currentValue[1];
+                maxValue[2] = currentValue[2];
+            }
+
+            String outputString = String.format("Rotation vector Sensor reading: (%f, %f, %f, %f, %f)Max reading: (%f, %f, %f)\n", currentValue[0], currentValue[1], currentValue[2], currentValue[3], currentValue[4], maxValue[0], maxValue[1], maxValue[2]);
+            output.setText(outputString);
+        }
+
+    }
+    private double vectorMagnitude (float[] vector) {
+        return Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2) + Math.pow(vector[2], 2));
+    }
+}

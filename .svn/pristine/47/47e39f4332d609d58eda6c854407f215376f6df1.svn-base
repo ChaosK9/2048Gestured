@@ -1,0 +1,29 @@
+package ca.uwaterloo.ece155_nlab2;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.widget.TextView;
+
+//Creating Light Sensor Event Listener
+
+public class LightSensorEventListener implements SensorEventListener {
+    TextView output;
+    double currentValue = 0;
+
+    public LightSensorEventListener(TextView outputView){
+        output = outputView;
+    }
+
+    public void onAccuracyChanged(Sensor s, int i){}
+
+    public void onSensorChanged(SensorEvent se){
+        if(se.sensor.getType() == Sensor.TYPE_LIGHT){
+            currentValue = se.values[0];
+
+            String outputString = String.format("Light Sensor reading: %f\n", currentValue);
+            output.setText(outputString);
+        }
+
+    }
+}

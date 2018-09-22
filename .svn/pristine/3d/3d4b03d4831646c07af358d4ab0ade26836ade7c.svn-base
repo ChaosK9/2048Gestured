@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/Users/ryansmacbook/.android/build-cache/fa70c65318a55d44364769747f79fc4a584b1067/output/res/layout-v21/notification_action.xml"
+    }
+]

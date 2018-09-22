@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher.png",
+        "source": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher.png",
+        "source": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher_round.png",
+        "source": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher.png",
+        "source": "/Users/ryansmacbook/Desktop/lab1-201-01-1/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher_round.png",
+        "source": "/Users/ryansmacbook/AndroidStudioProjects/Lab2-204-01/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher_round.png",
+        "source": "/Users/ryansmacbook/AndroidStudioProjects/Lab1_204_01/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    }
+]
